@@ -25,11 +25,11 @@ export default function SettingsPage() {
   const { toast } = useToast()
   const navigate = useNavigate()
 
-  const [network, setNetwork] = useState('testnet')
-  const [rpcUrl, setRpcUrl] = useState('https://soroban-testnet.stellar.org')
-  const [horizonUrl, setHorizonUrl] = useState('https://horizon-testnet.stellar.org')
-  const [registryContract, setRegistryContract] = useState('CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC')
-  const [disclosureContract, setDisclosureContract] = useState('CBPDNPWCH2KZZKGY3XN2I4RZZM4WCEZ47Z2Q2RMCVVZTRSQVU7HHGCZ5')
+  const [network, setNetwork] = useState(import.meta.env.VITE_STELLAR_NETWORK || 'testnet')
+  const [rpcUrl, setRpcUrl] = useState(import.meta.env.VITE_STELLAR_RPC_URL || 'https://soroban-testnet.stellar.org')
+  const [horizonUrl, setHorizonUrl] = useState(import.meta.env.VITE_STELLAR_HORIZON_URL || 'https://horizon-testnet.stellar.org')
+  const [registryContract, setRegistryContract] = useState(import.meta.env.VITE_STELLAR_CONTRACT_IDENTITY_REGISTRY || '')
+  const [disclosureContract, setDisclosureContract] = useState(import.meta.env.VITE_STELLAR_CONTRACT_SELECTIVE_DISCLOSURE || '')
 
   const [devices, setDevices] = useState([
     {
