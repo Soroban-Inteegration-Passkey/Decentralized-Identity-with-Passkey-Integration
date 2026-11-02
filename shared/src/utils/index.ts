@@ -38,7 +38,7 @@ export class StellarUtils {
     const bytes = typeof data === 'string' ? new TextEncoder().encode(data) : data;
     const subtle = getCryptoSubtle();
     if (subtle) {
-      const hashBuffer = await subtle.digest('SHA-256', bytes);
+      const hashBuffer = await subtle.digest('SHA-256', bytes as unknown as BufferSource);
       return Array.from(new Uint8Array(hashBuffer))
         .map((b) => b.toString(16).padStart(2, '0'))
         .join('');
@@ -140,7 +140,7 @@ export class PasskeyUtils {
 
     const credential = (await navigator.credentials.create({
       publicKey: {
-        challenge: serverChallenge,
+        challenge: serverChallenge as unknown as BufferSource,
         rp: {
           name: 'Equinox Prime DID',
           id: typeof window !== 'undefined' ? window.location.hostname : 'localhost',
@@ -182,7 +182,7 @@ export class PasskeyUtils {
 
     const assertion = (await navigator.credentials.get({
       publicKey: {
-        challenge: serverChallenge,
+        challenge: serverChallenge as unknown as BufferSource,
         allowCredentials: [],
         userVerification: 'required',
         timeout: 60000,
@@ -239,7 +239,7 @@ export class EncryptionUtils {
     return subtle.deriveKey(
       {
         name: 'PBKDF2',
-        salt: salt,
+        salt: salt as unknown as BufferSource,
         iterations: 100000,
         hash: 'SHA-256',
       },
