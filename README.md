@@ -1,5 +1,10 @@
 # Decentralized Identity with Passkey Integration (Stellar Soroban)
 
+[![Smart Contracts CI](https://github.com/Matrixlabz/-Decentralized-Identity-with-Passkey-Integration/actions/workflows/contract-tests.yml/badge.svg)](https://github.com/Matrixlabz/-Decentralized-Identity-with-Passkey-Integration/actions/workflows/contract-tests.yml)
+[![Workspace CI](https://github.com/Matrixlabz/-Decentralized-Identity-with-Passkey-Integration/actions/workflows/code-quality.yml/badge.svg)](https://github.com/Matrixlabz/-Decentralized-Identity-with-Passkey-Integration/actions/workflows/code-quality.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-green.svg)](./SECURITY.md)
+
 An enterprise-grade, self-sovereign decentralized identity (DID) platform anchored to the **Stellar Network** via **Soroban Smart Contracts** and authenticated using **WebAuthn Biometric Passkeys (Secp256r1)**.
 
 Eliminates seed phrases, insecure passwords, and centralized identity intermediaries while offering cryptographic selective disclosure and Merkle commitment-based verifiable credentials.
@@ -205,6 +210,16 @@ npm run dev
 
 ---
 
+## 🤝 Contributing & Community
+
+Contributions are welcome! Please review our contributor documentation before submitting pull requests:
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)**: Development workflow, environment setup, and PR guidelines.
+- **[SECURITY.md](./SECURITY.md)**: Responsible vulnerability disclosure process and security invariants.
+- **[Zero-Knowledge Research RFC](./.github/ISSUE_TEMPLATE/research_zk_proof.md)**: Scoped proposal for true zk-SNARK / range proof verification on Soroban.
+- **[Testnet Verification Audit](./docs/TESTNET_VERIFICATION.md)**: Audit of live testnet contract IDs and SAC collision analysis.
+
+---
+
 ## 📜 License
 
-Licensed under the [MIT License](./LICENSE).
+Licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Matrixlabz and Decentralized Identity Contributors.
