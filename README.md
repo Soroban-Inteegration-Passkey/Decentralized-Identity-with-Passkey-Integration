@@ -137,11 +137,20 @@ cargo test -- --nocapture
 
 ### Prerequisites
 - **Node.js** v18+ and **npm** v9+
-- **Rust** 1.74+ and `wasm32-unknown-unknown` target:
+- **Rust** 1.74+ (Rust 1.84+ recommended for modern toolchains)
+- **WebAssembly Targets**:
+  - **Modern Stellar CLI (v22+) & Rust 1.84+** requires the **`wasm32v1-none`** target to ensure compiled binaries conform strictly to Soroban runtime WASM feature limits:
+    ```bash
+    rustup target add wasm32v1-none
+    ```
+  - For legacy Soroban builds or backwards compatibility, also install `wasm32-unknown-unknown`:
+    ```bash
+    rustup target add wasm32-unknown-unknown
+    ```
+- **Stellar CLI** (v22+):
   ```bash
-  rustup target add wasm32-unknown-unknown
+  cargo install --locked stellar-cli --features opt
   ```
-- **Stellar CLI** (Soroban CLI)
 
 ### 1. Installation
 Clone the repository and install workspace dependencies:
