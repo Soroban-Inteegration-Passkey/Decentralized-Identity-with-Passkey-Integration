@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/auth';
 import { FileText, Plus, ShieldCheck, Lock, Unlock, CheckCircle2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toaster';
-import { AttributeType, IdentityAttribute } from '@decentralized-identity/shared';
+import { AttributeType, IdentityAttribute, EncryptionUtils } from '@decentralized-identity/shared';
 
 export default function AttributesPage() {
   const { user, setUser } = useAuthStore();
@@ -22,12 +22,17 @@ export default function AttributesPage() {
 
     try {
       setIsLoading(true);
+      let finalValue = attrValue;
+      if (isEncrypted && user?.publicKey) {
+        finalValue = await EncryptionUtils.encryptData(attrValue, user.publicKey);
+      }
+
       const res = await fetch(`/api/identity/${user?.id}/attributes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: attrName,
-          value: attrValue,
+          value: finalValue,
           type: attrType,
           encrypted: isEncrypted,
         }),
