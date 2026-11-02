@@ -2,7 +2,7 @@
 
 An enterprise-grade, self-sovereign decentralized identity (DID) platform anchored to the **Stellar Network** via **Soroban Smart Contracts** and authenticated using **WebAuthn Biometric Passkeys (Secp256r1)**.
 
-Eliminates seed phrases, insecure passwords, and centralized identity intermediaries while offering cryptographic selective disclosure and zero-knowledge verifiable credentials.
+Eliminates seed phrases, insecure passwords, and centralized identity intermediaries while offering cryptographic selective disclosure and Merkle commitment-based verifiable credentials.
 
 ---
 
@@ -21,7 +21,7 @@ Eliminates seed phrases, insecure passwords, and centralized identity intermedia
 - **Biometric Passkey Authentication**: Hardware-backed WebAuthn registration and authentication leveraging modern device enclaves (Touch ID, Face ID, Windows Hello) with RFC 8809 authenticator flags.
 - **Soroban Rust WASM Smart Contracts**: Fully verified, high-performance contracts running on Stellar Soroban:
   - `IdentityRegistry`: Manages on-chain DID records, attribute hashes, and third-party verification credentials.
-  - `SelectiveDisclosure`: Facilitates privacy-preserving disclosure queries and zero-knowledge commitment roots.
+  - `SelectiveDisclosure`: Facilitates privacy-preserving disclosure queries and cryptographic SHA-256 Merkle commitment roots.
 - **W3C DID v1.0 Standard Compliance**: Dynamic generation of `did:passkey` DID documents containing public keys, authentication suites, and service endpoints.
 - **Client-Side AES-256-GCM Encryption**: Identity claims and private metadata are encrypted with PBKDF2 key derivation and random IVs before leaving user devices.
 - **Selective Disclosure & Merkle Roots**: Disclose only required claims (e.g., "Over 21" or "Accredited Investor") using SHA-256 commitments without revealing underlying private attributes.
@@ -185,7 +185,7 @@ npm run dev
 
 1. **Hardware-Backed Private Keys**: Secp256r1 passkey credentials reside strictly inside the device's hardware Secure Enclave. Raw private keys never touch client JavaScript, backend servers, or blockchain ledgers.
 2. **Replay & Session Protection**: Every passkey assertion validates a single-use, 32-byte cryptographically secure challenge with a 5-minute strict TTL.
-3. **Zero-Knowledge Selective Disclosure**: Merkle commitment roots allow verifiers to mathematically validate identity criteria without acquiring sensitive personal data.
+3. **Cryptographic Selective Disclosure (Merkle Commitments)**: SHA-256 Merkle tree commitment roots and cryptographic inclusion proofs allow verifiers to validate identity claims without acquiring extraneous personal data. (See research RFC for roadmap to full zk-SNARK integration).
 4. **Emergency Pause Circuit Breaker**: Soroban contracts include administrator pause mechanisms to freeze registry mutations if an anomaly is detected.
 
 ---
