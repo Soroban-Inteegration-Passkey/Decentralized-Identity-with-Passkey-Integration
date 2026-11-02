@@ -28,18 +28,5 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Typecheck & Build Shared Package
-        run: |
-          if [ -d "shared" ]; then
-            cd shared && npm run build --if-present
-          fi
-
-      - name: Build Backend
-        run: |
-          cd backend
-          npm run build --if-present
-
-      - name: Build Frontend
-        run: |
-          cd frontend
-          npm run build --if-present
+      - name: Build & Typecheck Workspaces
+        run: npm run build
