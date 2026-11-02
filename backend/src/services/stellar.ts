@@ -1,7 +1,8 @@
 import {
+  Account,
   Keypair,
   Networks,
-  rpc,
+  SorobanRpc,
   TransactionBuilder,
   BASE_FEE,
   Address,
@@ -12,7 +13,7 @@ import axios from 'axios';
 import { logger } from '@/utils/logger';
 
 export class StellarService {
-  private rpcServer: rpc.Server;
+  private rpcServer: SorobanRpc.Server;
   private networkPassphrase: string;
   private friendbotUrl: string;
 
@@ -24,7 +25,7 @@ export class StellarService {
         : Networks.TESTNET;
     this.friendbotUrl =
       process.env.FRIENDBOT_URL || 'https://friendbot.stellar.org';
-    this.rpcServer = new rpc.Server(rpcUrl);
+    this.rpcServer = new SorobanRpc.Server(rpcUrl);
   }
 
   /**
@@ -68,7 +69,7 @@ export class StellarService {
   /**
    * Fetch on-chain account details via Soroban RPC.
    */
-  async getAccount(publicKey: string): Promise<rpc.Api.GetAccountResponse | null> {
+  async getAccount(publicKey: string): Promise<Account | null> {
     try {
       return await this.rpcServer.getAccount(publicKey);
     } catch (err) {

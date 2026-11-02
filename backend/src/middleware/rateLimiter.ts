@@ -4,21 +4,18 @@ import { createError } from './errorHandler'
 
 // Create rate limiters for different endpoints
 const authLimiter = new RateLimiterMemory({
-  keyGenerator: (req: Request) => req.ip,
   points: 5, // Number of requests
   duration: 900, // Per 15 minutes
   blockDuration: 900, // Block for 15 minutes
 })
 
 const generalLimiter = new RateLimiterMemory({
-  keyGenerator: (req: Request) => req.ip,
   points: 100, // Number of requests
   duration: 60, // Per 1 minute
   blockDuration: 60, // Block for 1 minute
 })
 
 const passkeyLimiter = new RateLimiterMemory({
-  keyGenerator: (req: Request) => req.ip,
   points: 3, // Number of requests
   duration: 300, // Per 5 minutes
   blockDuration: 300, // Block for 5 minutes
@@ -26,8 +23,9 @@ const passkeyLimiter = new RateLimiterMemory({
 
 export function rateLimiter(req: Request, res: Response, next: NextFunction): void {
   const limiter = getLimiterForRoute(req.path)
+  const clientKey = req.ip || req.socket.remoteAddress || '127.0.0.1'
   
-  limiter.consume(req.ip)
+  limiter.consume(clientKey)
     .then(() => next())
     .catch((rejRes) => {
       const secs = Math.round(rejRes.msBeforeNext / 1000) || 1

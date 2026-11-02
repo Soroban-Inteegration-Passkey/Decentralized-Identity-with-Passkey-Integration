@@ -111,34 +111,81 @@ export class DisclosureService {
   /**
    * Retrieve a request by ID.
    */
-  async getRequest(requestId: string): Promise<SelectiveDisclosureRequest | null> {
+  async getRequest(requestId: string, _userId?: string): Promise<SelectiveDisclosureRequest | null> {
     return this.requests.get(requestId) || null;
   }
 
   /**
    * Retrieve a response by request ID.
    */
-  async getResponse(requestId: string): Promise<SelectiveDisclosureResponse | null> {
+  async getResponse(requestId: string, _userId?: string): Promise<SelectiveDisclosureResponse | null> {
     return this.responses.get(requestId) || null;
+  }
+
+  /**
+   * Get requests created by a requester with pagination.
+   */
+  async getRequestsByRequester(
+    requesterId: string,
+    options?: { status?: string; page?: number; limit?: number }
+  ): Promise<{ requests: SelectiveDisclosureRequest[]; total: number; page: number; limit: number }> {
+    const all = Array.from(this.requests.values()).filter((r) => r.requester === requesterId);
+    const page = options?.page || 1;
+    const limit = options?.limit || 10;
+    const start = (page - 1) * limit;
+    const paginated = all.slice(start, start + limit);
+    return { requests: paginated, total: all.length, page, limit };
+  }
+
+  /**
+   * Get responses associated with an identity.
+   */
+  async getResponsesByIdentity(
+    identityId: string,
+    options?: { status?: string; page?: number; limit?: number }
+  ): Promise<{ responses: SelectiveDisclosureResponse[]; total: number; page: number; limit: number }> {
+    const all = Array.from(this.responses.values()).filter((r) => r.identityId === identityId);
+    const page = options?.page || 1;
+    const limit = options?.limit || 10;
+    const start = (page - 1) * limit;
+    const paginated = all.slice(start, start + limit);
+    return { responses: paginated, total: all.length, page, limit };
   }
 
   /**
    * Revoke a previously provided disclosure.
    */
-  async revokeResponse(requestId: string, callerAddress: string): Promise<boolean> {
+  async revokeResponse(requestId: string, callerAddressOrId: string, reason?: string): Promise<boolean> {
     const response = this.responses.get(requestId);
     if (!response) {
       throw createError('Response not found', 404);
     }
 
     const identity = await this.identityService.getIdentity(response.identityId);
-    if (!identity || identity.stellarAddress !== callerAddress) {
+    if (identity && identity.stellarAddress !== callerAddressOrId && identity.id !== callerAddressOrId) {
       throw createError('Unauthorized to revoke this disclosure response', 403);
     }
 
     response.revoked = true;
-    logger.info(`Revoked disclosure response for request: ${requestId}`);
+    logger.info(`Revoked disclosure response for request: ${requestId}. Reason: ${reason || 'unspecified'}`);
     return true;
+  }
+
+  /**
+   * Get disclosure statistics for an identity.
+   */
+  async getDisclosureStats(identityId: string): Promise<{ totalRequests: number; totalResponses: number; activeDisclosures: number; revokedDisclosures: number }> {
+    const responses = Array.from(this.responses.values()).filter((r) => r.identityId === identityId);
+    const active = responses.filter((r) => !r.revoked).length;
+    const revoked = responses.filter((r) => r.revoked).length;
+    const totalRequests = Array.from(this.requests.values()).filter((r) => r.requester === identityId).length;
+
+    return {
+      totalRequests,
+      totalResponses: responses.length,
+      activeDisclosures: active,
+      revokedDisclosures: revoked,
+    };
   }
 
   /**

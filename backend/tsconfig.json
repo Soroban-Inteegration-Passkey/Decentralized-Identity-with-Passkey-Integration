@@ -21,7 +21,8 @@
       "@/models/*": ["./src/models/*"],
       "@/middleware/*": ["./src/middleware/*"],
       "@/utils/*": ["./src/utils/*"],
-      "@/types/*": ["./src/types/*"]
+      "@/types/*": ["./src/types/*"],
+      "@decentralized-identity/shared": ["../shared/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*"],

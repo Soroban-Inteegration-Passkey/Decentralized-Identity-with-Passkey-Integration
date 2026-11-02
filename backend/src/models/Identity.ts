@@ -1,7 +1,15 @@
 import mongoose, { Schema, Document } from 'mongoose'
 import { Identity as IIdentity, IdentityAttribute, Verification } from '@decentralized-identity/shared'
 
-interface IdentityDocument extends IIdentity, Document {}
+export interface IdentityDocument {
+  id: string;
+  publicKey: string;
+  stellarAddress: string;
+  createdAt: Date;
+  updatedAt: Date;
+  attributes: IdentityAttribute[];
+  verifications: Verification[];
+}
 
 const AttributeSchema = new Schema<IdentityAttribute>({
   id: { type: String, required: true },

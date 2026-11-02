@@ -116,7 +116,7 @@ export class IdentityService {
     };
 
     // Mark matching attribute as verified
-    const attrIndex = doc.attributes.findIndex((a) => a.id === verification.attributeId);
+    const attrIndex = doc.attributes.findIndex((a: IdentityAttribute) => a.id === verification.attributeId);
     if (attrIndex !== -1) {
       doc.attributes[attrIndex].verified = true;
       doc.attributes[attrIndex].verificationId = verificationId;
@@ -139,7 +139,7 @@ export class IdentityService {
       throw createError('Identity not found', 404);
     }
 
-    const verIndex = doc.verifications.findIndex((v) => v.id === verificationId);
+    const verIndex = doc.verifications.findIndex((v: Verification) => v.id === verificationId);
     if (verIndex === -1) {
       throw createError('Verification not found', 404);
     }
@@ -147,7 +147,7 @@ export class IdentityService {
     const [removedVer] = doc.verifications.splice(verIndex, 1);
 
     // Unmark attribute verified status
-    const attrIndex = doc.attributes.findIndex((a) => a.id === removedVer.attributeId);
+    const attrIndex = doc.attributes.findIndex((a: IdentityAttribute) => a.id === removedVer.attributeId);
     if (attrIndex !== -1) {
       doc.attributes[attrIndex].verified = false;
       delete doc.attributes[attrIndex].verificationId;
