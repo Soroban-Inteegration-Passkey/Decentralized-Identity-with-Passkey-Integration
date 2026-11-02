@@ -37,7 +37,9 @@ Eliminates seed phrases, insecure passwords, and centralized identity intermedia
 │                        CLIENT / USER DEVICE                            │
 │  ┌───────────────────────┐                 ┌────────────────────────┐  │
 │  │   Hardware Passkey    │                 │   React 18 Frontend    │  │
-│  │  (Secp256r1 / Enclave)│<--- WebAuthn ---│   (Vite + Tailwind)    │  │
+│  │ (Secp256r1 / Enclave) │<--- WebAuthn ---│   (Web Crypto API)     │  │
+│  │ • Biometrics & Keys   │                 │ • Client AES-256-GCM   │  │
+│  │ • Raw keys never leave│                 │ • PBKDF2 Vault Backup  │  │
 │  └───────────────────────┘                 └───────────┬────────────┘  │
 └────────────────────────────────────────────────────────┼───────────────┘
                                                          │ HTTPS / JSON-RPC
@@ -45,9 +47,9 @@ Eliminates seed phrases, insecure passwords, and centralized identity intermedia
 │                           BACKEND GATEWAY                              │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
 │  │ Express + TypeScript API Server                                  │  │
-│  │ • Passkey Challenge Replay Protection (5-min TTL)                │  │
-│  │ • W3C DID Document Resolver (did:passkey)                        │  │
-│  │ • AES-256 Encryption & PBKDF2 Vault Storage                      │  │
+│  │ • Passkey Challenge Replay Protection (5-min strict TTL)         │  │
+│  │ • W3C DID Document Resolver (did:passkey:...)                    │  │
+│  │ • Merkle Inclusion Proof Verifier & Disclosure Gateway           │  │
 │  │ • Stellar Friendbot Auto-Funding Proxy                           │  │
 │  └──────────────────┬───────────────────────────┬───────────────────┘  │
 │                     │                           │                      │
@@ -64,6 +66,8 @@ Eliminates seed phrases, insecure passwords, and centralized identity intermedia
 │  └─────────────────────────────────┘   └────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+> 📖 **Encryption & Data Access Model**: For an in-depth audit of exactly what the client, backend server, and Stellar blockchain can and cannot read, see [DATA_ENCRYPTION_MODEL.md](./docs/security/DATA_ENCRYPTION_MODEL.md).
 
 ---
 
