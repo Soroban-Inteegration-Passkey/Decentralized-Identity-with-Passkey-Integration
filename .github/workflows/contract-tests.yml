@@ -1,0 +1,46 @@
+name: Smart Contracts CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'smart-contracts/**'
+      - '.github/workflows/contract-tests.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'smart-contracts/**'
+      - '.github/workflows/contract-tests.yml'
+
+jobs:
+  test-and-build:
+    name: Test & Build Soroban Contracts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: wasm32-unknown-unknown, wasm32v1-none
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: smart-contracts
+
+      - name: Run Soroban Smart Contract Tests
+        working-directory: smart-contracts
+        run: |
+          echo "Running all 10 unit tests for IdentityRegistry and SelectiveDisclosure..."
+          cargo test -- --nocapture
+
+      - name: Check Contract Build for WASM Target
+        working-directory: smart-contracts
+        run: |
+          echo "Building WASM contracts..."
+          cargo check --target wasm32-unknown-unknown --release
+          cargo build --target wasm32-unknown-unknown --release
