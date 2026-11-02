@@ -233,7 +233,7 @@ export default function DashboardPage() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0"></span>
-                <span><strong>Zero-Knowledge Commitments:</strong> Selective disclosure shares cryptographic roots without cleartext leaks.</span>
+                <span><strong>Merkle Root Commitments:</strong> Selective disclosure shares cryptographic roots without cleartext leaks.</span>
               </li>
             </ul>
           </div>

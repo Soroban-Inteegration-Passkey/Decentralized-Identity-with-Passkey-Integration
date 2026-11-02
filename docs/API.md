@@ -294,7 +294,9 @@ Revoke a disclosure response.
 ```
 
 #### POST /api/disclosure/verify-zk-proof
-Verify a zero-knowledge proof.
+Verify cryptographic commitment / inclusion proof (or evaluate prototype ZK proof payload).
+
+> **Note**: Current production implementation verifies cryptographic SHA-256 Merkle inclusion commitments. Full zk-SNARK proof verification is tracked under research RFC `#1`.
 
 **Request Body:**
 ```json

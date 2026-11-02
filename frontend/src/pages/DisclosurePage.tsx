@@ -95,8 +95,8 @@ export default function DisclosurePage() {
 
       setHistory(prev => [newItem, ...prev])
       toast({
-        title: 'Zero-Knowledge Proof Generated',
-        description: `Disclosed ${selected.length} fields; ${newItem.hiddenFieldsCount} fields preserved privately.`
+        title: 'Cryptographic Proof Generated',
+        description: `Disclosed ${selected.length} fields; ${newItem.hiddenFieldsCount} fields preserved privately with SHA-256 Merkle root.`
       })
     } catch (err: any) {
       toast({
@@ -125,7 +125,7 @@ export default function DisclosurePage() {
           Selective Disclosure
         </h1>
         <p className="text-slate-400 mt-1">
-          Share only specific identity attributes with cryptographic zero-knowledge commitments.
+          Share only specific identity attributes with cryptographic Merkle tree commitments and inclusion proofs.
         </p>
       </div>
 

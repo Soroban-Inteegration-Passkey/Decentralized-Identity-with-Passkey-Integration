@@ -140,7 +140,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* Footer */}
       <footer className="border-t border-slate-800/60 py-6 text-center text-xs text-slate-500">
         <p>
-          Equinox Prime Decentralized Identity • Native Secp256r1 Passkeys & Zero-Knowledge Selective Disclosure on Stellar Soroban
+          Equinox Prime Decentralized Identity • Native Secp256r1 Passkeys & Cryptographic Selective Disclosure on Stellar Soroban
         </p>
       </footer>
     </div>

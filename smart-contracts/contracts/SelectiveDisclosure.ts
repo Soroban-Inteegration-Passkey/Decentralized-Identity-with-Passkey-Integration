@@ -36,7 +36,7 @@ export class SelectiveDisclosure extends Contract {
   }
 
   /**
-   * Respond to a request with cryptographic zero-knowledge commitment root and proof
+   * Respond to a request with cryptographic Merkle commitment root and inclusion proof
    */
   respondToRequest(
     requestId: string,

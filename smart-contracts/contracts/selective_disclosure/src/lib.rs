@@ -176,7 +176,7 @@ impl SelectiveDisclosureContract {
         Ok(())
     }
 
-    /// Respond to a selective disclosure request with zero-knowledge cryptographic commitment.
+    /// Respond to a selective disclosure request with cryptographic Merkle commitment root.
     pub fn respond_to_request(
         env: Env,
         request_id: String,

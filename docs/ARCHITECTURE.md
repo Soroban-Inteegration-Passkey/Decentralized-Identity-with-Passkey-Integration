@@ -72,9 +72,9 @@ WebAuthn Passkeys        Smart Contracts           Identity Registry
 
 ### Data Protection
 
-- **Encryption**: All sensitive data encrypted at rest and in transit
-- **Zero-Knowledge Proofs**: Optional ZK proofs for privacy-preserving verification
-- **Selective Disclosure**: Granular control over shared information
+- **Encryption**: Sensitive exported vaults encrypted client-side via AES-256-GCM; TLS for transport
+- **Cryptographic Commitments**: SHA-256 Merkle root commitments for selective disclosure verification
+- **Selective Disclosure**: Granular control over disclosed attributes without revealing unrequested claims
 - **Audit Trail**: Immutable records on Stellar blockchain
 
 ### Threat Mitigation
@@ -232,7 +232,7 @@ GitHub Actions:
 
 - **Data Minimization**: Collect only necessary information
 - **Selective Disclosure**: Share only required attributes
-- **Zero-Knowledge**: Privacy-preserving verification
+- **Cryptographic Commitments**: Merkle root inclusion proofs for privacy preservation
 - **Anonymization**: Remove personal identifiers where possible
 
 ### Compliance
